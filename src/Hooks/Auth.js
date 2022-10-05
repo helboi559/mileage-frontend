@@ -7,12 +7,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
-
+  // console.log(user)
   useEffect(() => {
     const userToken = getUserToken();
     setUser(userToken);
   }, [isAuthLoading]);
-
+  
   const navigate = useNavigate();
 
   // call this function when you want to register the user
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     Memoization is essentially caching. The variable value will only be recalculated if the 
     variables in the watched array change.
   */
- 
+  
   const value = useMemo(
     () => ({
       user,
@@ -93,7 +93,7 @@ const registerUser = async (username, password,email,phone) => {
   const responseJSON = await response.json();
   return responseJSON;
 };
-
+// console.log(user)
 const loginUser = async (username, password) => {
   const url = `${urlEndpoint}/auth/login-user`;
   const response = await fetch(url, {
@@ -122,7 +122,7 @@ const validateAdmin = async (userToken) => {
   const responseJSON = await response.json();
   return responseJSON;
 };
-
+// console.log(token)
 const setUserToken = (token) => {
   localStorage.setItem(
     process.env.REACT_APP_TOKEN_HEADER_KEY,

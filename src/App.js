@@ -1,7 +1,7 @@
 import './App.css';
 import {Routes,Route} from "react-router-dom"
 import Home from './Pages/Home';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import RegistrationPage from './Pages/RegistrationPage';
 import LoginPage from './Pages/LoginPage';
 import Dashboard from './Pages/Dashboard';
@@ -10,26 +10,28 @@ import ResponsiveAppBar from './Components/NavBar';
 import CalendarTool from './Components/CalendarTool';
 import dayjs from 'dayjs';
 import { useAuth } from './Hooks/Auth';
+import CustomTheme from './CustomTheme';
 
 //backend endpoint
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT 
 function App() {
-  // console.log(urlEndpoint)
+  
+  // const {user} = useAuth()
   const [date,setDate] = useState(dayjs())
-
   
   return (
-    <div className="App">
+    <CustomTheme>
       <ResponsiveAppBar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='registration' element={<RegistrationPage />}/>
         <Route path='login' element={<LoginPage />}/>
         <Route path='dashboard' element={<Dashboard date={date} urlEndpoint={urlEndpoint} setDate={setDate}/>}/>
-        <Route path='all-drives' element={<AllDrives urlEndpoint={urlEndpoint}/>}/>
+        <Route path='all-drives' element={<AllDrives  />}/>
+        
       </Routes>
 
-    </div>
+    </CustomTheme>
   );
 }
 

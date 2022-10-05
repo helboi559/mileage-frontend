@@ -77,16 +77,26 @@ const Dashboard = ({date,setDate,urlEndpoint}) => {
   
   const logRoute = async () => {
     //tripId ?? in backend
-    
+    const businessTaxRate = .625
+    const mileage = directionsResponse.routes[0].legs[0].distance.value
+    const reimburstment = Math.round(((mileage/1609) * businessTaxRate ) * 10 ) /10
+    const total = Math.round(Number(reimburstment + parking + tolls) * 10) /10
+
+    // console.log(typeof total)
+    // console.log(typeof parking)
+    // console.log(typeof tolls)
+    // console.log(total)
     const url = `${urlEndpoint}/drives/log-drive`
     // console.log(url)
     const trip = {
       date:date.$d,
       origin:originRef.current.value,
       destination:destiantionRef.current.value,
-      mileage:directionsResponse.routes[0].legs[0].distance.value,
+      mileage,
       tolls,
-      parking
+      parking,
+      reimburstment,
+      total
     }
     console.log("logRoute()",trip)
     // console.log(originRef.current.value)
@@ -150,8 +160,8 @@ const Dashboard = ({date,setDate,urlEndpoint}) => {
       
       </CalendarTool><br />
       {/* {console.log("dashboard calendar",date)} */}
-        <input type="number" placeholder='tolls' value={tolls} onChange={(e)=>setTolls(e.target.value)}/><br />
-        <input type="number" placeholder='parking' value={parking} onChange={(e)=>setParking(e.target.value)}/><br />
+        <input type="number"  value={tolls} onChange={(e)=>setTolls(Number(e.target.value))}/><br />
+        <input type="number"  value={parking} onChange={(e)=>setParking(Number(e.target.value))}/><br />
         <button onClick={calculateRoute}>search</button><br />
         <button onClick={clearRoute}>clear</button><br />
         <span>distance {distance}</span><br />

@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './Hooks/Auth';
+import DrivesProvider from './Hooks/Drives';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
   <React.StrictMode>
     <BrowserRouter>
     <AuthProvider>
+      <DrivesProvider>
         <App />
+        </DrivesProvider>
     </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
